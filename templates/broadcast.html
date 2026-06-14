@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL-092026 // ЭФИР</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
+</head>
+<body class="screen-flicker projector-body">
+
+    <!-- Main Content (Authorized by default for broadcast) -->
+    <div id="main-content">
+        <!-- Clean Centered Projector Feed -->
+        <div id="feed" class="projector-feed">
+            <div class="message-card" style="text-align: center;">
+                <span class="message-text" style="font-size: 2rem; color: #333;">ОЖИДАНИЕ СИГНАЛОВ...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Area -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>
