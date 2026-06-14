@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL-092026 // ЭФИР</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
+</head>
+<body class="screen-flicker projector-body">
+
+    <!-- Lock Screen Overlay -->
+    <div id="lock-screen">
+        <div class="lock-container">
+            <div class="lock-logo glow-text">TERMINAL_092026</div>
+            <div class="form-label" style="margin-bottom: 12px;">ВВЕДИТЕ КЛЮЧ ДОСТУПА:</div>
+            <input type="password" id="password-input" class="lock-input" placeholder="******" autofocus>
+            <button id="auth-btn" class="btn-terminal">ОТКРЫТЬ ЭФИР</button>
+            <div id="auth-error" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until authorized) -->
+    <div id="main-content" style="display: none;">
+        <!-- Clean Centered Projector Feed -->
+        <div id="feed" class="projector-feed">
+            <div class="message-card" style="text-align: center;">
+                <span class="message-text" style="font-size: 2rem; color: #333;">ОЖИДАНИЕ СИГНАЛОВ...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Area -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

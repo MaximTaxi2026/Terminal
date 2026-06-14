@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL-092026 // АДМИНИСТРАТОР</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+</head>
+<body class="screen-flicker">
+
+    <!-- Lock Screen Overlay -->
+    <div id="lock-screen">
+        <div class="lock-container">
+            <div class="lock-logo glow-text">TERMINAL_092026</div>
+            <div class="form-label" style="margin-bottom: 12px;">ВВЕДИТЕ КЛЮЧ ДОСТУПА:</div>
+            <input type="password" id="password-input" class="lock-input" placeholder="******" autofocus>
+            <button id="auth-btn" class="btn-terminal">ВОЙТИ В ПАНЕЛЬ</button>
+            <div id="auth-error" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until authorized) -->
+    <div id="main-content" style="display: none;">
+        <div class="container admin-container">
+            <header>
+                <div class="title glow-text">> TERMINAL_092026 // ADMIN CONTROL</div>
+                <div class="status-indicator">
+                    <span id="status-text">ПОДКЛЮЧЕНИЕ...</span>
+                    <div id="status-dot" class="status-dot disconnected"></div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Soundboard section -->
+                <div class="form-group">
+                    <h3 class="form-label glow-text">> САУНДБОРД ДЛЯ ПРОЕКТОРА (МГНОВЕННЫЙ ЗВУК)</h3>
+                    <div class="soundboard-grid" style="margin-top: 10px;">
+                        <button type="button" class="btn-terminal btn-sound" data-sound="applause">
+                            <span>👏 АПЛОДИСМЕНТЫ</span>
+                            <span style="font-size: 0.7rem; opacity: 0.6;">Synth Noise Claps</span>
+                        </button>
+                        <button type="button" class="btn-terminal btn-sound" data-sound="laughter">
+                            <span>😂 СМЕХ</span>
+                            <span style="font-size: 0.7rem; opacity: 0.6;">Chirp Laughs</span>
+                        </button>
+                        <button type="button" class="btn-terminal btn-sound" data-sound="fail">
+                            <span>📉 ФЕЙЛ</span>
+                            <span style="font-size: 0.7rem; opacity: 0.6;">Pitch Wah-Wah</span>
+                        </button>
+                        <button type="button" class="btn-terminal btn-sound" data-sound="fanfare">
+                            <span>🎺 ФАНФАРЫ</span>
+                            <span style="font-size: 0.7rem; opacity: 0.6;">Triad Saw Synth</span>
+                        </button>
+                        <button type="button" class="btn-terminal btn-sound" data-sound="bassboost">
+                            <span>🔊 BASS-BOOST ROFL</span>
+                            <span style="font-size: 0.7rem; opacity: 0.6;">Sub-Bass Slider</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Moderation section -->
+                <div class="form-group" style="margin-top: 30px;">
+                    <h3 class="form-label admin-feed-title glow-text">> МОДЕРАЦИЯ СООБЩЕНИЙ</h3>
+                    <div id="admin-feed">
+                        <div class="admin-message-row" style="justify-content: center; border-color: #333;">
+                            <span style="color: #555;">ЛЕНТА МОДЕРАЦИИ ПУСТА...</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Notification Toast Area -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL-092026 // ОТПРАВИТЕЛЬ</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="screen-flicker">
+
+    <!-- Lock Screen Overlay -->
+    <div id="lock-screen">
+        <div class="lock-container">
+            <div class="lock-logo glow-text">TERMINAL_092026</div>
+            <div class="form-label" style="margin-bottom: 12px;">ВВЕДИТЕ КЛЮЧ ДОСТУПА:</div>
+            <input type="password" id="password-input" class="lock-input" placeholder="******" autofocus>
+            <button id="auth-btn" class="btn-terminal">ПОДКЛЮЧИТЬСЯ</button>
+            <div id="auth-error" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until authorized) -->
+    <div id="main-content" style="display: none;">
+        <div class="container guest-wrapper">
+            <header>
+                <div class="title glow-text">> TERMINAL_092026 // SENDER</div>
+                <div class="status-indicator">
+                    <span id="status-text">ОЖИДАНИЕ...</span>
+                    <div id="status-dot" class="status-dot"></div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Nickname Form Group -->
+                <div class="form-group">
+                    <label class="form-label" for="nickname-input">> УКАЖИТЕ ВАШ НИКНЕЙМ:</label>
+                    <input type="text" id="nickname-input" class="input-text border-neon" placeholder="USER_NAME" maxlength="20">
+                </div>
+
+                <!-- Nickname Color Presets -->
+                <div class="form-group">
+                    <label class="form-label">> ЦВЕТ СИГНАЛА В ЭФИРЕ:</label>
+                    <div class="color-presets">
+                        <button type="button" class="color-btn active" data-color="#00FF41" title="Неоновый зеленый"></button>
+                        <button type="button" class="color-btn" data-color="#FF003C" title="Кислотный красный"></button>
+                        <button type="button" class="color-btn" data-color="#FFD700" title="Кибер-желтый"></button>
+                        <button type="button" class="color-btn" data-color="#BF00FF" title="Фиолетовый"></button>
+                        <button type="button" class="color-btn" data-color="#FFFFFF" title="Классический белый"></button>
+                    </div>
+                </div>
+
+                <!-- Message Text Form Group -->
+                <div class="form-group">
+                    <label class="form-label" for="message-input">> ВВЕДИТЕ СООБЩЕНИЕ:</label>
+                    <textarea id="message-input" class="input-text border-neon" rows="4" placeholder="Введите ваш текст..." maxlength="280" style="resize: vertical;"></textarea>
+                </div>
+
+                <!-- Photo Upload Area -->
+                <div class="form-group">
+                    <label class="form-label">> ПРИКРЕПИТЬ ФОТОГРАФИЮ:</label>
+                    <div class="photo-upload-container border-neon" id="upload-box">
+                        <span id="upload-label">📎 НАЖМИТЕ ДЛЯ ВЫБОРА ФОТО</span>
+                        <input type="file" id="photo-input" class="photo-input" accept="image/*">
+                        <div class="photo-preview" id="photo-preview-container">
+                            <img id="photo-preview-img" src="" alt="Предпросмотр">
+                        </div>
+                    </div>
+                    <div style="text-align: right; margin-top: 5px;">
+                        <button type="button" id="clear-photo-btn" class="btn-terminal" style="font-size: 0.75rem; padding: 4px 8px; display: none; border-color: var(--acid-red); color: var(--acid-red);">УДАЛИТЬ ФОТО</button>
+                    </div>
+                </div>
+
+                <!-- Duration Selector -->
+                <div class="form-group">
+                    <label class="form-label">> ВРЕМЯ ЖИЗНИ СООБЩЕНИЯ В ЭФИРЕ:</label>
+                    <div class="duration-presets">
+                        <button type="button" class="duration-btn" data-seconds="3">3s</button>
+                        <button type="button" class="duration-btn active" data-seconds="7">7s</button>
+                        <button type="button" class="duration-btn" data-seconds="15">15s</button>
+                    </div>
+                    <input type="hidden" id="duration-input" value="7">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group" style="margin-top: 30px;">
+                    <button type="button" id="send-btn" class="btn-terminal btn-send">ОТПРАВИТЬ СИГНАЛ</button>
+                </div>
+
+                <!-- Open Broadcast Screen Link -->
+                <div class="form-group" style="margin-top: 20px;">
+                    <a href="/broadcast" target="_blank" class="btn-terminal" style="display: block; text-decoration: none; text-align: center; border-color: var(--cyber-yellow); color: var(--cyber-yellow); border-radius: 12px; padding: 12px;">📺 ОТКРЫТЬ ЭФИР ДЛЯ ПРОЕКТОРА</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Notification Toast Area -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>
