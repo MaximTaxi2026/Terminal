@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: terminal-092026
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
