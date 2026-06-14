@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Дополнения для Terminal ---
+
+database.db
+
+.DS_Store
+
+.idea/
+.vscode/
+
+*.log
