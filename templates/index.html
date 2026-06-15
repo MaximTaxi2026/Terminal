@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL-092026 // ОТПРАВИТЕЛЬ</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="screen-flicker">
+
+    <!-- Lock Screen Overlay -->
+    <div id="lock-screen">
+        <div class="lock-container">
+            <div class="lock-logo glow-text">TERMINAL_092026</div>
+            <div class="form-label" style="margin-bottom: 12px;">ВВЕДИТЕ КЛЮЧ ДОСТУПА:</div>
+            <input type="password" id="password-input" class="lock-input" placeholder="******" autofocus>
+            <button id="auth-btn" class="btn-terminal">ПОДКЛЮЧИТЬСЯ</button>
+            <div id="auth-error" class="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until authorized) -->
+    <div id="main-content" style="display: none;">
+        <div class="container guest-wrapper">
+            <header>
+                <div class="title glow-text">> TERMINAL_092026 // SENDER</div>
+                <div class="status-indicator">
+                    <span id="status-text">ОЖИДАНИЕ...</span>
+                    <div id="status-dot" class="status-dot"></div>
+                </div>
+            </header>
+
+            <main>
+                <!-- Nickname Form Group -->
+                <div class="form-group">
+                    <label class="form-label" for="nickname-input">> УКАЖИТЕ ВАШ НИКНЕЙМ:</label>
+                    <input type="text" id="nickname-input" class="input-text border-neon" placeholder="USER_NAME" maxlength="20">
+                </div>
+
+                <!-- Nickname Color Presets -->
+                <div class="form-group">
+                    <label class="form-label">> ЦВЕТ СИГНАЛА В ЭФИРЕ:</label>
+                    <div class="color-presets">
+                        <button type="button" class="color-btn active" data-color="#00FF41" title="Неоновый зеленый"></button>
+                        <button type="button" class="color-btn" data-color="#FF003C" title="Кислотный красный"></button>
+                        <button type="button" class="color-btn" data-color="#FFD700" title="Кибер-желтый"></button>
+                        <button type="button" class="color-btn" data-color="#BF00FF" title="Фиолетовый"></button>
+                        <button type="button" class="color-btn" data-color="#FFFFFF" title="Классический белый"></button>
+                    </div>
+                </div>
+
+                <!-- Message Text Form Group -->
+                <div class="form-group">
+                    <label class="form-label" for="message-input">> ВВЕДИТЕ СООБЩЕНИЕ:</label>
+                    <textarea id="message-input" class="input-text border-neon" rows="4" placeholder="Введите ваш текст..." maxlength="280" style="resize: vertical;"></textarea>
+                </div>
+
+                <!-- Photo Upload Area -->
+                <div class="form-group">
+                    <label class="form-label">> ПРИКРЕПИТЬ ФОТО/ВИДЕО:</label>
+                    <div class="photo-upload-container border-neon" id="upload-box">
+                        <span id="upload-label">📎 НАЖМИТЕ ДЛЯ ВЫБОРА МЕДИА</span>
+                        <input type="file" id="photo-input" class="photo-input" accept="image/*,video/mp4,video/webm,video/quicktime">
+                        <div class="photo-preview" id="photo-preview-container" style="display: none; position: relative;">
+                            <img id="photo-preview-img" src="" alt="Предпросмотр" style="display: none; width: 100%; border-radius: 8px;">
+                            <video id="video-preview-vid" controls style="display: none; width: 100%; border-radius: 8px; border: 1px solid var(--neon-green);"></video>
+                        </div>
+                    </div>
+                    <div style="text-align: right; margin-top: 5px;">
+                        <button type="button" id="clear-photo-btn" class="btn-terminal" style="font-size: 0.75rem; padding: 4px 8px; display: none; border-color: var(--acid-red); color: var(--acid-red);">УДАЛИТЬ МЕДИА</button>
+                    </div>
+                </div>
+
+                <!-- Duration Selector -->
+                <div class="form-group" id="duration-group">
+                    <label class="form-label">> ВРЕМЯ ЖИЗНИ СООБЩЕНИЯ В ЭФИРЕ:</label>
+                    <div class="duration-presets">
+                        <button type="button" class="duration-btn" data-seconds="persistent">NO</button>
+                        <button type="button" class="duration-btn" data-seconds="3">3s</button>
+                        <button type="button" class="duration-btn active" data-seconds="7">7s</button>
+                        <button type="button" class="duration-btn" data-seconds="15">15s</button>
+                    </div>
+                </div>
+
+                <!-- Draw Mode Toggle -->
+                <div class="form-group">
+                    <button type="button" id="toggle-draw-btn" class="btn-terminal" style="width: 100%; border-color: var(--neon-blue); color: var(--neon-blue);">🎨 РЕЖИМ РИСОВАНИЯ: ВЫКЛ</button>
+                    
+                    <div id="draw-container" style="display: none; margin-top: 15px;">
+                        <label class="form-label">> ХОЛСТ РЕАЛЬНОГО ВРЕМЕНИ:</label>
+                        <div class="canvas-wrapper border-neon" style="position: relative; background: #050505; border-radius: 8px; overflow: hidden; height: 300px; touch-action: none;">
+                            <canvas id="draw-canvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                        </div>
+                        <div style="text-align: right; margin-top: 5px;">
+                            <button type="button" id="clear-canvas-btn" class="btn-terminal" style="font-size: 0.75rem; padding: 4px 8px; border-color: var(--acid-red); color: var(--acid-red);">ОЧИСТИТЬ ХОЛСТ</button>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Remote Control Panel -->
+                <div class="form-group border-neon" style="padding: 15px; background: rgba(0,0,0,0.5); border-radius: 12px;">
+                    <label class="form-label" style="color: var(--cyber-yellow);">> УПРАВЛЕНИЕ ВИДЕО НА ЭКРАНЕ:</label>
+                    <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                        <button type="button" class="btn-terminal remote-btn" data-cmd="play" style="flex: 1; min-width: 70px; padding: 8px; font-size: 0.85rem;">PLAY</button>
+                        <button type="button" class="btn-terminal remote-btn" data-cmd="pause" style="flex: 1; min-width: 70px; padding: 8px; font-size: 0.85rem;">PAUSE</button>
+                        <button type="button" class="btn-terminal remote-btn" data-cmd="mute" style="flex: 1; min-width: 70px; padding: 8px; font-size: 0.85rem;">MUTE</button>
+                        <button type="button" class="btn-terminal remote-btn" data-cmd="unmute" style="flex: 1; min-width: 70px; padding: 8px; font-size: 0.85rem;">UNMUTE</button>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button type="button" class="btn-terminal remote-btn" data-cmd="seek-back" style="flex: 1; padding: 8px; font-size: 0.85rem;">⏪ -5s</button>
+                        <button type="button" class="btn-terminal remote-btn" data-cmd="seek-forward" style="flex: 1; padding: 8px; font-size: 0.85rem;">+5s ⏩</button>
+                        <button type="button" id="hide-btn" class="btn-terminal" data-state="visible" style="flex: 1.5; border-color: var(--acid-red); color: var(--acid-red); padding: 8px; font-size: 0.85rem;">❌ СКРЫТЬ</button>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button type="button" class="btn-terminal zoom-btn" data-zoom="zoom-in" style="flex: 1; padding: 8px; font-size: 0.85rem;">🔍 +</button>
+                        <button type="button" class="btn-terminal zoom-btn" data-zoom="zoom-out" style="flex: 1; padding: 8px; font-size: 0.85rem;">🔍 -</button>
+                        <button type="button" class="btn-terminal zoom-btn" data-zoom="zoom-reset" style="flex: 1; padding: 8px; font-size: 0.85rem;">RESET</button>
+                    </div>
+                </div>
+
+                <!-- Emoji Panel Group -->
+                <div class="form-group border-neon" style="padding: 15px; background: rgba(0,0,0,0.5); border-radius: 12px; margin-top: 25px;">
+                    <label class="form-label" style="color: var(--cyber-yellow);">> БЫСТРЫЕ РЕАКЦИИ (ЭФИР):</label>
+                    <div class="emoji-presets" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 10px;">
+                        <button type="button" class="btn-terminal emoji-btn" data-emoji="🔥" style="padding: 8px; font-size: 1.5rem; border-radius: 8px !important;">🔥</button>
+                        <button type="button" class="btn-terminal emoji-btn" data-emoji="❤️" style="padding: 8px; font-size: 1.5rem; border-radius: 8px !important;">❤️</button>
+                        <button type="button" class="btn-terminal emoji-btn" data-emoji="💀" style="padding: 8px; font-size: 1.5rem; border-radius: 8px !important;">💀</button>
+                        <button type="button" class="btn-terminal emoji-btn" data-emoji="😂" style="padding: 8px; font-size: 1.5rem; border-radius: 8px !important;">😂</button>
+                        <button type="button" class="btn-terminal emoji-btn" data-emoji="👍" style="padding: 8px; font-size: 1.5rem; border-radius: 8px !important;">👍</button>
+                        <button type="button" class="btn-terminal emoji-btn" data-emoji="👎" style="padding: 8px; font-size: 1.5rem; border-radius: 8px !important;">👎</button>
+                    </div>
+                </div>
+
+
+
+                <!-- Submit Button -->
+                <div class="form-group" style="margin-top: 30px;">
+                    <button type="button" id="send-btn" class="btn-terminal btn-send">ОТПРАВИТЬ СИГНАЛ</button>
+                </div>
+
+                <!-- Open Broadcast Screen Link -->
+                <div class="form-group" style="margin-top: 20px;">
+                    <a href="/broadcast" target="_blank" class="btn-terminal" style="display: block; text-decoration: none; text-align: center; border-color: var(--cyber-yellow); color: var(--cyber-yellow); border-radius: 12px; padding: 12px;">📺 ОТКРЫТЬ ЭФИР ДЛЯ ПРОЕКТОРА</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Notification Toast Area -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <script src="{{ url_for('static', path='js/app.js') }}"></script>
+</body>
+</html>
