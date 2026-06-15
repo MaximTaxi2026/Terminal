@@ -494,9 +494,9 @@ async def upload_video(file: UploadFile = File(...), token: str = Form(...)):
         return JSONResponse(status_code=500, content={"detail": str(e), "traceback": traceback.format_exc()})
 
 
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health():
-    return {"status": "ok"}
+    return PlainTextResponse("ok")
 
 
 # WebSocket Endpoint with error catching
